@@ -1,6 +1,7 @@
 'use strict';
 import { GAME_STATUS, GAME_TIME, PAIRS_COUNT } from './constants.js';
 import {
+  getColorBackground,
   getColorElementList,
   getColorListElement,
   getInActiveColorList,
@@ -46,6 +47,9 @@ function handleLiElementClick(liElement) {
   // handle matching
   const isMatchColors = selections[0].dataset.color === selections[1].dataset.color;
   if (isMatchColors) {
+    // change background color if matching
+    const background = getColorBackground();
+    background.style.background = selections[0].dataset.color;
     // reset selection to push and handle in next turn
     selections = [];
     // check win
@@ -116,13 +120,11 @@ function attachClickEventForPlayAgainButton() {
 }
 function handleTimerChange(currentSecond) {
   // handle something...
-  console.log('change', currentSecond);
   const fullTime = `0${currentSecond}`.slice(-2);
   setTimerText(`Time: ${fullTime}`);
 }
 function handleTimerFinish() {
   // handle something...
-  console.log('finished');
 
   // update game status
   gameStatus = GAME_STATUS.FINISHED;
@@ -156,7 +158,7 @@ function initColors() {
 
 // main
 (() => {
-  console.log('main is running...');
+  //   console.log('game is running...');
   initColors();
 
   // add click event to colorList element
